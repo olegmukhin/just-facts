@@ -34,6 +34,13 @@
             }
             this.parent().data('justFacts-active', false).children().show();
         },
+        toggle : function( ) {
+            if( this.parent().data('justFacts-active') !== true ) {
+                methods.show.apply( this );
+            } else {
+                methods.hide.apply( this );
+            }
+        },
     };
 
     $.fn.justFacts = function( method ) {

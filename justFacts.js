@@ -5,7 +5,7 @@
     };
 
     var methods = {
-        init : function( options ) { 
+        init : function( options ) {
             $.extend( settings, options);
         },
         show : function( ) {

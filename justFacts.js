@@ -13,7 +13,7 @@
         show : function( ) {
             this.each( function() {
                 var container = $(this).parent();
-                if( container.css('display') != 'none' && container.data('justFacts-clone') != true ) {
+                if( container.css('display') != 'none' && container.data('justFacts-clone') !== true ) {
                     var clone = container.clone();
                     container.before(clone).hide();
                     clone.contents().filter(function() {
@@ -25,6 +25,16 @@
         },
         hide : function( ) {
             
+        },
+        toggle : function( ) {
+            this.each( function() {
+                var container = $(this).parent();
+                if( container.data('justFacts-clone') !== true ) {
+                    return methods['show'].apply( $(this), arguments );
+                } else {
+                    return methods['hide'].apply( $(this), arguments );
+                }
+            });
         }
     };
 

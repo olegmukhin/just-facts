@@ -4,7 +4,6 @@
         bounds: $("body"),
     };
 
-
     var methods = {
         init : function( options ) { 
             this.options = $.extend( {}, defaults, options) ;
@@ -13,8 +12,9 @@
         show : function( ) {
             this.each( function() {
                 var container = $(this).parent();
-                if( container.css('display') != 'none' && container.data('justFacts-clone') !== true ) {
+                if( container.css('display') != 'none' && container.data('justFacts-clone') != true ) {
                     var clone = container.clone();
+                    alert(container.css('display'));
                     container.before(clone).hide();
                     clone.contents().filter(function() {
                             return this.nodeType == 3;
@@ -24,23 +24,18 @@
             });
         },
         hide : function( ) {
-            
-        },
-        toggle : function( ) {
             this.each( function() {
                 var container = $(this).parent();
-                if( container.data('justFacts-clone') !== true ) {
-                    return methods['show'].apply( $(this), arguments );
-                } else {
-                    return methods['hide'].apply( $(this), arguments );
+                if( container.data('justFacts-clone') == true ) {
+                    container.next().show();
+                    container.remove();
                 }
             });
-        }
+        },
     };
 
     $.fn.justFacts = function( method ) {
 
-        // Method calling logic
         if ( methods[method] ) {
             return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
         } else if ( typeof method === 'object' || ! method ) {

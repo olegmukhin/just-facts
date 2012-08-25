@@ -18,12 +18,13 @@
                 if(container.data('justFacts-active') != true) {
                     container.contents().filter(function() {
                         if( this.nodeType == 3 ) {
-                            var wrapped = $('<span>' + $(this).text() + '</span>').hide();
+                            var wrapped = $('<span>' + $(this).text() + '</span>');
                             $(this).replaceWith(wrapped);
+                            wrapped.hide('slow');
                         } else if( this.nodeType == 1 && $(this).data('justFacts-fact') != true ) {
                             return this;
                         }
-                    }).hide();
+                    }).hide('slow');
                     container.data('justFacts-active', true);
                 }
             });

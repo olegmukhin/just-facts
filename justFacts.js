@@ -1,36 +1,32 @@
 ;(function ( $, window, document, undefined ) {
 
     defaults = {
-        bounds: $("body"),
+        classOnShow: false,
     };
 
     var methods = {
         init : function( options ) { 
-            this.options = $.extend( {}, defaults, options) ;
-            this.featured = false;
+            this.options = $.extend( {}, defaults, options);
         },
         show : function( ) {
-            this.each( function() {
+            this.data('justFacts-fact', true);
+            this.each(function() {
                 var container = $(this).parent();
-                if( container.css('display') != 'none' && container.data('justFacts-clone') != true ) {
-                    var clone = container.clone();
-                    alert(container.css('display'));
-                    container.before(clone).hide();
-                    clone.contents().filter(function() {
-                            return this.nodeType == 3;
-                    }).remove();
-                    clone.data('justFacts-clone', true);
+                if(container.data('justFacts-active') != true) {
+                    container.contents().filter(function() {
+                        if( this.nodeType == 3 ) {
+                            var wrapped = $('<span>' + $(this).text() + '</span>').hide();
+                            $(this).replaceWith(wrapped);
+                        } else if( this.nodeType == 1 && $(this).data('justFacts-fact') != true ) {
+                            return this;
+                        }
+                    }).hide();
+                    container.data('justFacts-active', true);
                 }
             });
         },
         hide : function( ) {
-            this.each( function() {
-                var container = $(this).parent();
-                if( container.data('justFacts-clone') == true ) {
-                    container.next().show();
-                    container.remove();
-                }
-            });
+            this.parent().data('justFacts-active', false).children().show();
         },
     };
 
